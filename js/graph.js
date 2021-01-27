@@ -68,7 +68,7 @@ g.append("g")
     .attr("y", 6)
     .attr("dy", "1.2em")
     .attr("text-anchor", "end")
-    .text("Price ($)");
+    .text("Price (USD)");
 
 g.append("path")
     .datum(data)
