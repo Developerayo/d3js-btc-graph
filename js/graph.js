@@ -1,10 +1,6 @@
-//from Scrimba.com
-//API to fetch historical data of Bitcoin Price Index
+// coindesk btc api 
 const api = 'https://api.coindesk.com/v1/bpi/historical/close.json?start=2017-12-31&end=2018-04-01';
 
-/**
- * Loading data from API when DOM Content has been loaded'.
- */
 document.addEventListener("DOMContentLoaded", function(event) {
 fetch(api)
     .then(function(response) { return response.json(); })
@@ -18,7 +14,6 @@ fetch(api)
 /**
  * @param {object} data Object containing historical data of BPI
  */
-
 function parseData(data) {
     var arr = [];
     for (var i in data.bpi) {
@@ -58,6 +53,12 @@ var line = d3.line()
     .y(function(d) { return y(d.value)})
     x.domain(d3.extent(data, function(d) { return d.date }));
     y.domain(d3.extent(data, function(d) { return d.value }));
+
+g.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x))
+    .select(".domain")
+    .remove();
 
 g.append("g")
     .call(d3.axisLeft(y))
