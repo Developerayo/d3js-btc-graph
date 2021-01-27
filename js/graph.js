@@ -1,14 +1,22 @@
-//from Scrimba.com
-//API to fetch historical data of Bitcoin Price Index
+// coindesk btc api 
 const api = 'https://api.coindesk.com/v1/bpi/historical/close.json?start=2017-12-31&end=2018-04-01';
 
+document.addEventListener("DOMContentLoaded", function(event) {
+fetch(api)
+    .then(function(response) { return response.json(); })
+    .then(function(data) {
+        var parsedData = parseData(data);
+        drawChart(parsedData);
+    })
+    .catch(function(err) { console.log(err); })
+});
+
 /**
- * Creates a chart using D3
  * @param {object} data Object containing historical data of BPI
  */
 function drawChart(data) {
 var svgWidth = 600, svgHeight = 400;
-var margin = { top: 10, right: 30, bottom: 30, left: 30 };
+var margin = { top: 20, right: 20, bottom: 30, left: 50 };
 var width = svgWidth - margin.left - margin.right;
 var height = svgHeight - margin.top - margin.bottom;
 
@@ -35,6 +43,9 @@ g.append("g")
     .call(d3.axisLeft(y))
     .append("text")
     .attr("fill", "#000")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 6)
+    .attr("dy", "1.2em")
     .attr("text-anchor", "end")
     .text("Price ($)");
 
@@ -42,6 +53,8 @@ g.append("path")
     .datum(data)
     .attr("fill", "none")
     .attr("stroke", "steelblue")
+    .attr("stroke-linejoin", "round")
+    .attr("stroke-linecap", "round")
     .attr("stroke-width", 2)
     .attr("d", line);
 }
